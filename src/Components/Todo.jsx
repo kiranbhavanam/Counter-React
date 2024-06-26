@@ -5,7 +5,10 @@ const List = (props) => {
     <tr>
       <td>{props.id}</td>
       <td>
-        <input type="text" className="border" />
+        {/* <input type="text" className="border" /> */}
+        {
+          
+        }
       </td>
       <td>{props.time}</td>
     </tr>
@@ -22,15 +25,29 @@ const Todo = () => {
     setTodos([...todos].reverse());
     console.log("after reversing: ", [...todos].reverse());
   };
-  const addClickHandler=()=>{
-    setDisplay(!display)
-  }
+  const addClickHandler = () => {
+    setDisplay(!display);
+  };
   return (
     <div>
       {/* Enter the task */}
-      <div className={display?"h-[100px] flex justify-evenly items-center gap-3 bg-[#6a6a6f] w-[500px] mx-auto my-4 rounded-sm shadow":"hidden"}>
-    <input type="text" className="border bg-white text-black py-2 px-4 w-[350px] shadow-black shadow-sm rounded-sm" />
-      <button className="border shadow-black bg-[#3d3d3d] text-white py-2 px-4 shadow-sm rounded-sm" onClick={addClickHandler}>ADD TASK</button>
+      <div
+        className={
+          display
+            ? "h-[100px] flex justify-evenly items-center gap-3 bg-[#6a6a6f] w-[500px] mx-auto my-4 rounded-sm shadow"
+            : "hidden"
+        }
+      >
+        <input
+          type="text"
+          className="border bg-white text-black py-2 px-4 w-[350px] shadow-black shadow-sm rounded-sm"
+        />
+        <button
+          className="border shadow-black bg-[#3d3d3d] text-white py-2 px-4 shadow-sm rounded-sm"
+          onClick={addClickHandler}
+        >
+          ADD TASK
+        </button>
       </div>
       <table className={display && "hidden"}>
         <thead>
@@ -56,6 +73,12 @@ const Todo = () => {
           })}
         </tbody>
       </table>
+      <button
+        className="py-2 px-4 mr-4 border-b-2 border-gray-300 bg-gray-100 text-left text-gray-600 uppercase font-semibold text-sm"
+        onClick={addClickHandler}
+      >
+        New Task
+      </button>
       <button
         className="py-2 px-4 border-b-2 border-gray-300 bg-gray-100 text-left text-gray-600 uppercase font-semibold text-sm"
         onClick={reverse}
