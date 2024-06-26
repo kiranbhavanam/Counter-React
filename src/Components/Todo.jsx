@@ -6,9 +6,7 @@ const List = (props) => {
       <td>{props.id}</td>
       <td>
         {/* <input type="text" className="border" /> */}
-        {
-          
-        }
+            {props.desc}
       </td>
       <td>{props.time}</td>
     </tr>
@@ -16,17 +14,21 @@ const List = (props) => {
 };
 const Todo = () => {
   const [display, setDisplay] = useState(true);
+  const [value,setValue]=useState("")
   const [todos, setTodos] = useState([
-    { id: 1, time: "8:00" },
+    { id: 1, time: "8:00",desc:"Play game" },
     { id: 2, time: "6:00" },
   ]);
   const reverse = () => {
     console.log("before reversing: ", todos);
     setTodos([...todos].reverse());
+
     console.log("after reversing: ", [...todos].reverse());
   };
   const addClickHandler = () => {
     setDisplay(!display);
+    setTodos([...todos,{desc:value}])
+
   };
   return (
     <div>
@@ -40,7 +42,9 @@ const Todo = () => {
       >
         <input
           type="text"
+          value={value}
           className="border bg-white text-black py-2 px-4 w-[350px] shadow-black shadow-sm rounded-sm"
+          onChange={(e)=>{setValue(e.target.value)}}
         />
         <button
           className="border shadow-black bg-[#3d3d3d] text-white py-2 px-4 shadow-sm rounded-sm"
@@ -69,13 +73,13 @@ const Todo = () => {
             console.log(
               `<List key=${index} id=${task.id} time=${task.time}></List>`
             );
-            return <List key={index} id={task.id} time={task.time}></List>;
+            return <List key={index} id={task.id} desc={task.desc}  time={task.time}></List>;
           })}
         </tbody>
       </table>
       <button
-        className="py-2 px-4 mr-4 border-b-2 border-gray-300 bg-gray-100 text-left text-gray-600 uppercase font-semibold text-sm"
-        onClick={addClickHandler}
+        className={display?"hidden":"py-2 px-4 mr-4 border-b-2 border-gray-300 bg-gray-100 text-left text-gray-600 uppercase font-semibold text-sm"}
+        onClick={()=>{setDisplay(!display)}}
       >
         New Task
       </button>
