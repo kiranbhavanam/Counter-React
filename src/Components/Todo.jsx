@@ -2,13 +2,10 @@ import React, { useState } from "react";
 
 const List = (props) => {
   return (
-    <tr>
-      <td>{props.id}</td>
-      <td>
-        {/* <input type="text" className="border" /> */}
-            {props.desc}
-      </td>
-      <td>{props.time}</td>
+    <tr className=" hover:bg-gray-200 shadow-white shadow-sm transition duration-300">
+      <td className="py-2 px-4 text-blue-600 font-medium">{props.id}</td>
+      <td className="py-2 px-4 text-gray-800">{props.desc}</td>
+      <td className="py-2 px-4 text-gray-600">{props.time}</td>
     </tr>
   );
 };
@@ -17,7 +14,7 @@ const Todo = () => {
   const [value,setValue]=useState("")
   const [todos, setTodos] = useState([
     { id: 1, time: "8:00",desc:"Play game" },
-    { id: 2, time: "6:00" },
+    { id: 2, time: "6:00",desc:"Do Gym" },
   ]);
   const reverse = () => {
     console.log("before reversing: ", todos);
@@ -27,43 +24,49 @@ const Todo = () => {
   };
   const addClickHandler = () => {
     setDisplay(!display);
-    setTodos([...todos,{desc:value}])
+    const newTask={
+      id:todos.length+1,
+      desc:value,
+      time:new Date().toLocaleTimeString()}
+      //make sure to sort the todo because if its in reversed then new task gets added to incorrect position.
+    setTodos([...todos,newTask].sort((a,b)=>a.id-b.id))
+    setValue("")
 
   };
   return (
-    <div>
+    <div className="max-w-4xl mx-auto mt-10 p-4 bg-white shadow-md rounded-lg">
       {/* Enter the task */}
       <div
         className={
           display
-            ? "h-[100px] flex justify-evenly items-center gap-3 bg-[#6a6a6f] w-[500px] mx-auto my-4 rounded-sm shadow"
+            ? "flex justify-between items-center gap-3 bg-blue-50 p-4 rounded-md shadow-sm"
             : "hidden"
         }
       >
         <input
           type="text"
           value={value}
-          className="border bg-white text-black py-2 px-4 w-[350px] shadow-black shadow-sm rounded-sm"
+          className="border border-blue-300 bg-white text-black py-2 px-4 w-3/4 rounded-md shadow-sm  focus:outline-none focus:ring-2 focus:ring-blue-400"
           onChange={(e)=>{setValue(e.target.value)}}
         />
         <button
-          className="border shadow-black bg-[#3d3d3d] text-white py-2 px-4 shadow-sm rounded-sm"
+          className="border border-blue-500 text-blue-500 bg-white py-2 px-4 rounded-md shadow-sm hover:bg-blue-600 hover:text-white transition duration-300"
           onClick={addClickHandler}
         >
           ADD TASK
         </button>
       </div>
-      <table className={display && "hidden"}>
+      <table className={display ?"hidden":"w-full my-4"}>
         <thead>
-          <tr>
-            <td className="py-2 px-4 border-b-2 border-gray-300  bg-gray-100 text-left text-gray-600 uppercase font-semibold text-sm">
+          <tr className="">
+            <td className="py-2 px-4 border-b-2 border-gray-300 bg-blue-100 text-center text-gray-700 uppercase font-semibold text-sm">
               Id
             </td>
 
-            <td className="py-2 px-4 border-b-2 border-gray-300 bg-gray-100 text-left text-gray-600 uppercase font-semibold text-sm">
+            <td className="py-2 px-4 border-b-2 border-gray-300 bg-blue-100 text-center text-gray-600 uppercase font-semibold text-sm">
               Input
             </td>
-            <td className="py-2 px-4 border-b-2 border-gray-300 bg-gray-100 text-left text-gray-600 uppercase font-semibold text-sm">
+            <td className="py-2 px-4 border-b-2 border-gray-300 bg-blue-100 text-center text-gray-600 uppercase font-semibold text-sm">
               Time
             </td>
           </tr>
@@ -78,13 +81,13 @@ const Todo = () => {
         </tbody>
       </table>
       <button
-        className={display?"hidden":"py-2 px-4 mr-4 border-b-2 border-gray-300 bg-gray-100 text-left text-gray-600 uppercase font-semibold text-sm"}
+        className={display?"hidden":"py-2 px-4 mr-4 border border-blue-500 bg-blue-500 text-left text-white uppercase font-semibold text-sm rounded-md transition-all shadow-sm hover:bg-blue-600 duration-300 "}
         onClick={()=>{setDisplay(!display)}}
       >
         New Task
       </button>
       <button
-        className="py-2 px-4 border-b-2 border-gray-300 bg-gray-100 text-left text-gray-600 uppercase font-semibold text-sm"
+        className={display?"hidden":"py-2 px-4 border border-blue-300 bg-blue-500 text-left text-white uppercase font-semibold text-sm rounded-md shadow-sm transition duration-300 hover:bg-blue-600"}
         onClick={reverse}
       >
         reverse

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import Counter from "./Components/Counter";
-import Todo from "./Components/Todo";
+import Todo from "./Components/Todo.jsx";
 
 
 function App() {
