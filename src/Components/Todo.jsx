@@ -34,25 +34,27 @@ const Todo = () => {
 
   };
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-4 bg-white shadow-md rounded-lg">
+    <div className="h-[100vh] flex justify-center items-center bg-[#2d2d2e]">
+
+    <div className="w-3/5 mx-auto mt-10 p-4 bg-white shadow-sm shadow-white rounded-lg">
       {/* Enter the task */}
       <div
         className={
           display
             ? "flex justify-between items-center gap-3 bg-blue-50 p-4 rounded-md shadow-sm"
             : "hidden"
-        }
-      >
+          }
+          >
         <input
           type="text"
           value={value}
           className="border border-blue-300 bg-white text-black py-2 px-4 w-3/4 rounded-md shadow-sm  focus:outline-none focus:ring-2 focus:ring-blue-400"
           onChange={(e)=>{setValue(e.target.value)}}
-        />
+          />
         <button
           className="border border-blue-500 text-blue-500 bg-white py-2 px-4 rounded-md shadow-sm hover:bg-blue-600 hover:text-white transition duration-300"
           onClick={addClickHandler}
-        >
+          >
           ADD TASK
         </button>
       </div>
@@ -83,7 +85,7 @@ const Todo = () => {
       <button
         className={display?"hidden":"py-2 px-4 mr-4 border border-blue-500 bg-blue-500 text-left text-white uppercase font-semibold text-sm rounded-md transition-all shadow-sm hover:bg-blue-600 duration-300 "}
         onClick={()=>{setDisplay(!display)}}
-      >
+        >
         New Task
       </button>
       <button
@@ -93,6 +95,7 @@ const Todo = () => {
         reverse
       </button>
     </div>
+        </div>
   );
 };
 
