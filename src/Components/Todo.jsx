@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 
 const List = (props) => {
+  const completedHandler=()=>{
+
+  }
   return (
     <tr className=" hover:bg-gray-200 shadow-white shadow-sm transition duration-300">
       <td className="py-2 px-4 text-blue-600 font-medium">{props.id}</td>
       <td className="py-2 px-4 text-gray-800">{props.desc}</td>
-      <td className="py-2 px-4 text-gray-600">{props.time}</td>
+      <td className="py-2 pl-4 text-gray-600">{props.time}</td>
+      <td className="py-2 pr-4 text-gray-600">
+        <button className="border font-extralight text-sm px-2 py-1 bg-blue-100 mr-2 shadow-md" onClick={completedHandler}>Mark Completed</button>
+        <button className="border font-extralight text-sm px-2 py-1 bg-blue-100 shadow-md">Delete</button>
+      </td>
+
     </tr>
   );
 };
@@ -70,6 +78,9 @@ const Todo = () => {
             </td>
             <td className="py-2 px-4 border-b-2 border-gray-300 bg-blue-100 text-center text-gray-600 uppercase font-semibold text-sm">
               Time
+            </td>
+            <td className="py-2 px-4 border-b-2 border-gray-300 bg-blue-100 text-center text-gray-600 uppercase font-semibold text-sm"> 
+              Action
             </td>
           </tr>
         </thead>
