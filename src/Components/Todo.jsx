@@ -2,7 +2,11 @@ import React, { useState } from "react";
 
 const List = (props) => {
   const completedHandler=()=>{
-
+    
+  }
+  const deleteHandler=(id)=>{
+    const newTodos=props.todos.filter(task=>task.id!==id)
+    console.log(props.setTodos(newTodos))
   }
   return (
     <tr className=" hover:bg-gray-200 shadow-white shadow-sm transition duration-300">
@@ -10,8 +14,8 @@ const List = (props) => {
       <td className="py-2 px-4 text-gray-800">{props.desc}</td>
       <td className="py-2 pl-4 text-gray-600">{props.time}</td>
       <td className="py-2 pr-4 text-gray-600">
-        <button className="border font-extralight text-sm px-2 py-1 bg-blue-100 mr-2 shadow-md" onClick={completedHandler}>Mark Completed</button>
-        <button className="border font-extralight text-sm px-2 py-1 bg-blue-100 shadow-md">Delete</button>
+        <button className="border font-extralight text-sm px-2 py-1 bg-blue-100 mr-2 shadow-md rounded-md hover:bg-blue-200" onClick={completedHandler}>Mark Completed</button>
+        <button className="border font-extralight text-sm px-2 py-1 bg-blue-100 shadow-md rounded-md hover:bg-blue-200 " onClick={()=>{deleteHandler(props.id)}}>Delete</button>
       </td>
 
     </tr>
@@ -89,7 +93,7 @@ const Todo = () => {
             console.log(
               `<List key=${index} id=${task.id} time=${task.time}></List>`
             );
-            return <List key={index} id={task.id} desc={task.desc}  time={task.time}></List>;
+            return <List key={index} id={task.id} desc={task.desc}  time={task.time} todos={todos} setTodos={setTodos}></List>;
           })}
         </tbody>
       </table>
