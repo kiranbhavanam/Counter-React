@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 
 const List = (props) => {
-  const completedHandler=()=>{
+  const completedHandler=(id)=>{
+    props.setTodos(props.todos.map((task)=>task.id===id?{...task,status:"completed"}:task))
     
   }
   const deleteHandler=(id)=>{
@@ -14,7 +15,7 @@ const List = (props) => {
       <td className="py-2 px-4 text-gray-800">{props.desc}</td>
       <td className="py-2 pl-4 text-gray-600">{props.time}</td>
       <td className="py-2 pr-4 text-gray-600">
-        <button className="border font-extralight text-sm px-2 py-1 bg-blue-100 mr-2 shadow-md rounded-md hover:bg-blue-200" onClick={completedHandler}>Mark Completed</button>
+        <button className={`border font-extralight text-sm px-2 py-1 bg-blue-100 mr-2 shadow-md rounded-md hover:bg-blue-200 ${props.status==="completed"&&"bg-green-400 pointer-events-none transition-all duration-150"}`} onClick={()=>{completedHandler(props.id)}}>{props.status===""?"Mark Completed":"Finished!"}</button>
         <button className="border font-extralight text-sm px-2 py-1 bg-blue-100 shadow-md rounded-md hover:bg-blue-200 " onClick={()=>{deleteHandler(props.id)}}>Delete</button>
       </td>
 
@@ -25,8 +26,8 @@ const Todo = () => {
   const [display, setDisplay] = useState(true);
   const [value,setValue]=useState("")
   const [todos, setTodos] = useState([
-    { id: 1, time: "8:00",desc:"Play game" },
-    { id: 2, time: "6:00",desc:"Do Gym" },
+    { id: 1, time: "8:00",desc:"Play game",status:"" },
+    { id: 2, time: "6:00",desc:"Do Gym" ,staus:""},
   ]);
   const reverse = () => {
     console.log("before reversing: ", todos);
@@ -39,7 +40,8 @@ const Todo = () => {
     const newTask={
       id:todos.length+1,
       desc:value,
-      time:new Date().toLocaleTimeString()}
+      time:new Date().toLocaleTimeString(),
+      status:""}
       //make sure to sort the todo because if its in reversed then new task gets added to incorrect position.
     setTodos([...todos,newTask].sort((a,b)=>a.id-b.id))
     setValue("")
@@ -64,8 +66,9 @@ const Todo = () => {
           onChange={(e)=>{setValue(e.target.value)}}
           />
         <button
-          className="border border-blue-500 text-blue-500 bg-white py-2 px-4 rounded-md shadow-sm hover:bg-blue-600 hover:text-white transition duration-300"
+          className={` border border-blue-500 text-blue-500 bg-white py-2 px-4 rounded-md shadow-sm ${value?"hover:bg-blue-600 hover:text-white transition duration-300":"opacity-50 cursor-not-allowed"}`}
           onClick={addClickHandler}
+          disabled={!value}
           >
           ADD TASK
         </button>
@@ -93,7 +96,7 @@ const Todo = () => {
             console.log(
               `<List key=${index} id=${task.id} time=${task.time}></List>`
             );
-            return <List key={index} id={task.id} desc={task.desc}  time={task.time} todos={todos} setTodos={setTodos}></List>;
+            return <List key={index} id={task.id} desc={task.desc}  time={task.time} status={task.status} todos={todos} setTodos={setTodos}></List>;
           })}
         </tbody>
       </table>
