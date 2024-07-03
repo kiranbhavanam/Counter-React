@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { json } from "react-router-dom";
 
 const List = (props) => {
   const completedHandler = (id) => {
     props.setTodos(
       props.todos.map((task) =>
-        task.id === id ? { ...task, status: "completed" } : task
+        task.id === id ? { ...task, status:"completed" } : task
       )
     );
   };
   const deleteHandler = (id) => {
     const newTodos = props.todos.filter((task) => task.id !== id);
-    console.log(props.setTodos(newTodos));
+    props.setTodos(newTodos);
   };
   return (
     <tr className=" hover:bg-gray-200 shadow-white shadow-sm transition duration-300">
@@ -43,22 +42,25 @@ const List = (props) => {
   );
 };
 const Todo = () => {
+  //get the todos from local storage for initializing from 2nd time onwards.
+  const getInitialTodos = () => {
+    const storedTodos = JSON.parse(localStorage.getItem("todos"));
+    return storedTodos || [];
+  };
+  const [todos, setTodos] = useState(getInitialTodos);
   const [display, setDisplay] = useState(true);
   const [value, setValue] = useState("");
-  const [todos, setTodos] = useState([
-    { id: 1, time: "8:00", desc: "Play game", status: "" },
-    { id: 2, time: "6:00", desc: "Do Gym", staus: "" },
-  ]);
   // Load tasks from local storage whenever the component is mounted.
   useEffect(() => {
     const storedTodos = JSON.parse(localStorage.getItem("todos"));
     if (storedTodos) {
+      console.log("Loaded todos from local storage:", storedTodos);
       setTodos(storedTodos);
     }
   }, []);
-
-  //Update the local storage whenever the todo is updated.
+  
   useEffect(() => {
+    console.log("Updating local storage with todos:", todos);
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
   const reverse = () => {
@@ -130,9 +132,9 @@ const Todo = () => {
           </thead>
           <tbody>
             {todos.map((task, index) => {
-              console.log(
-                `<List key=${index} id=${task.id} time=${task.time}></List>`
-              );
+              // console.log(
+              //   `<List key=${index} id=${task.id} time=${task.time}></List>`
+              // );
               return (
                 <List
                   key={index}
