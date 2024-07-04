@@ -88,8 +88,8 @@ const Todo = () => {
         <div
           className={
             display
-              ? "flex justify-between items-center gap-3 bg-blue-50 p-4 rounded-md shadow-sm"
-              : "hidden"
+            ?"hidden":"flex justify-between items-center gap-3 bg-blue-50 p-4 rounded-md shadow-sm"
+              
           }
         >
           <input
@@ -112,7 +112,7 @@ const Todo = () => {
             ADD TASK
           </button>
         </div>
-        <table className={display ? "hidden" : "w-full my-4"}>
+        <table className={display ? "w-full my-4":"hidden"}>
           <thead>
             <tr className="">
               <td className="py-2 px-4 border-b-2 border-gray-300 bg-blue-100 text-center text-gray-700 uppercase font-semibold text-sm">
@@ -152,9 +152,8 @@ const Todo = () => {
         <button
           className={
             display
-              ? "hidden"
-              : "py-2 px-4 mr-4 border border-blue-500 bg-blue-500 text-left text-white uppercase font-semibold text-sm rounded-md transition-all shadow-sm hover:bg-blue-600 duration-300 "
-          }
+              ? "py-2 px-4 mr-4 border border-blue-500 bg-blue-500 text-left text-white uppercase font-semibold text-sm rounded-md transition-all shadow-sm hover:bg-blue-600 duration-300 ":"hidden"
+                        }
           onClick={() => {
             setDisplay(!display);
           }}
@@ -164,8 +163,8 @@ const Todo = () => {
         <button
           className={
             display
-              ? "hidden"
-              : "py-2 px-4 border border-blue-300 bg-blue-500 text-left text-white uppercase font-semibold text-sm rounded-md shadow-sm transition duration-300 hover:bg-blue-600"
+              ?
+               "py-2 px-4 border border-blue-300 bg-blue-500 text-left text-white uppercase font-semibold text-sm rounded-md shadow-sm transition duration-300 hover:bg-blue-600": "hidden"
           }
           onClick={reverse}
         >
