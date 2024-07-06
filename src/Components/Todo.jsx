@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/ReactToastify.css";
 const List = (props) => {
+  const deleteNotify=()=>{toast("Task has been deleted.")}
+  const completedNotify=()=>{toast("Hurray!! task completed.")}
   const completedHandler = (id) => {
     props.setTodos(
       props.todos.map((task) =>
-        task.id === id ? { ...task, status:"completed" } : task
+        task.id === id ? { ...task, status: "completed" } : task
       )
     );
+    completedNotify();
   };
   const deleteHandler = (id) => {
     const newTodos = props.todos.filter((task) => task.id !== id);
     props.setTodos(newTodos);
+    deleteNotify();
   };
   return (
     <tr className=" hover:bg-gray-200 shadow-white shadow-sm transition duration-300">
@@ -50,6 +55,9 @@ const Todo = () => {
   const [todos, setTodos] = useState(getInitialTodos);
   const [display, setDisplay] = useState(true);
   const [value, setValue] = useState("");
+  const notify = () => {
+    toast("New task added!");
+  };
   // Load tasks from local storage whenever the component is mounted.
   useEffect(() => {
     const storedTodos = JSON.parse(localStorage.getItem("todos"));
@@ -58,7 +66,7 @@ const Todo = () => {
       setTodos(storedTodos);
     }
   }, []);
-  
+
   useEffect(() => {
     console.log("Updating local storage with todos:", todos);
     localStorage.setItem("todos", JSON.stringify(todos));
@@ -80,6 +88,7 @@ const Todo = () => {
     //make sure to sort the todo because if its in reversed then new task gets added to incorrect position.
     setTodos([...todos, newTask].sort((a, b) => a.id - b.id));
     setValue("");
+    notify();
   };
   return (
     <div className="h-[100vh] flex justify-center items-center bg-[#2d2d2e]">
@@ -88,8 +97,8 @@ const Todo = () => {
         <div
           className={
             display
-            ?"hidden":"flex justify-between items-center gap-3 bg-blue-50 p-4 rounded-md shadow-sm"
-              
+              ? "hidden"
+              : "flex justify-between items-center gap-3 bg-blue-50 p-4 rounded-md shadow-sm"
           }
         >
           <input
@@ -112,7 +121,7 @@ const Todo = () => {
             ADD TASK
           </button>
         </div>
-        <table className={display ? "w-full my-4":"hidden"}>
+        <table className={display ? "w-full my-4" : "hidden"}>
           <thead>
             <tr className="">
               <td className="py-2 px-4 border-b-2 border-gray-300 bg-blue-100 text-center text-gray-700 uppercase font-semibold text-sm">
@@ -152,8 +161,9 @@ const Todo = () => {
         <button
           className={
             display
-              ? "py-2 px-4 mr-4 border border-blue-500 bg-blue-500 text-left text-white uppercase font-semibold text-sm rounded-md transition-all shadow-sm hover:bg-blue-600 duration-300 ":"hidden"
-                        }
+              ? "py-2 px-4 mr-4 border border-blue-500 bg-blue-500 text-left text-white uppercase font-semibold text-sm rounded-md transition-all shadow-sm hover:bg-blue-600 duration-300 "
+              : "hidden"
+          }
           onClick={() => {
             setDisplay(!display);
           }}
@@ -163,13 +173,14 @@ const Todo = () => {
         <button
           className={
             display
-              ?
-               "py-2 px-4 border border-blue-300 bg-blue-500 text-left text-white uppercase font-semibold text-sm rounded-md shadow-sm transition duration-300 hover:bg-blue-600": "hidden"
+              ? "py-2 px-4 border border-blue-300 bg-blue-500 text-left text-white uppercase font-semibold text-sm rounded-md shadow-sm transition duration-300 hover:bg-blue-600"
+              : "hidden"
           }
           onClick={reverse}
         >
           reverse
         </button>
+        <ToastContainer></ToastContainer>
       </div>
     </div>
   );
