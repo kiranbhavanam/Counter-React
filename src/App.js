@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./App.css";
 import Counter from "./Components/Counter";
 import Todo from "./Components/Todo.jsx";
+import { ThemeProvider } from "./Components/Theme.jsx";
 
 function App() {
   const [activeComponent, setActiveComponent] = useState({app:"",status:false});
@@ -37,7 +38,7 @@ function backHandler(){
       </div>
       <div className="component-container">
         {activeComponent.app === "Counter" && <Counter />}
-        {activeComponent.app=== "Todo" && <Todo />}
+        {activeComponent.app=== "Todo" &&<ThemeProvider><Todo /></ThemeProvider> }
       </div>
 
    

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
-
+import { useTheme } from './Theme';
 const Counter = () => {
   const [counter,setCounter]=useState(0);
   function incrementHandler(){
@@ -9,9 +9,9 @@ const Counter = () => {
   function decrementHandler(){
     setCounter(counter-1)
   }
-  
+  const {theme}=useTheme();
   return (
-    <div className=' bg-[#2d2d2d] h-[100vh] flex justify-center items-center flex-col'>
+    <div className={`${theme==="dark"?"bg-[#2d2d2d]":"bg-white" }h-[100vh] flex justify-center items-center flex-col`}>
         <div className='font-medium text-purple-700 text-2xl mb-3'> Increment && Decrement</div>
         <div className='flex bg-white w-[250px] gap-3 justify-center  items-center align-top '>
             <button className='text-3xl font-medium px-4 py-2 flex items-center justify-center' onClick={decrementHandler}>-</button>

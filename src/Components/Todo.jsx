@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import { useTheme } from "./Theme";
 import "react-toastify/ReactToastify.css";
 const List = (props) => {
-  const deleteNotify=()=>{toast("Task has been deleted.")}
-  const completedNotify=()=>{toast("Hurray!! task completed.")}
+  const deleteNotify = () => {
+    toast("Task has been deleted.");
+  };
+  const completedNotify = () => {
+    toast("Hurray!! task completed.");
+  };
   const completedHandler = (id) => {
     props.setTodos(
       props.todos.map((task) =>
@@ -90,8 +95,22 @@ const Todo = () => {
     setValue("");
     notify();
   };
+  const { theme, toggleTheme } = useTheme();
+
   return (
-    <div className="h-[100vh] flex justify-center items-center bg-[#2d2d2e]">
+    <div
+      className={`h-[100vh] flex justify-center items-center ${
+        theme === "dark" ? "bg-[#2d2d2e]" : "bg-white"
+      }`}
+    >
+      <button
+        className=" absolute top-10 px-2 py-2 bg-slate-200 text-2xl rounded-full flex justify-center items-center"
+        onClick={() => {
+          toggleTheme();
+        }}
+      >
+        <i className="fa-solid fa-circle-half-stroke "></i>
+      </button>
       <div className="w-3/5 mx-auto mt-10 p-4 bg-white shadow-sm shadow-white rounded-lg">
         {/* Enter the task */}
         <div
@@ -121,9 +140,13 @@ const Todo = () => {
             ADD TASK
           </button>
         </div>
-        <table className={display ? "w-full my-4" : "hidden"}>
+        <table
+          className={`${display ? "w-full my-4" : "hidden"} ${
+            theme === "light" ? "bg-slate-600" : "bg-white"
+          }`}
+        >
           <thead>
-            <tr className="">
+            <tr className={`${theme === "dark" && "text-white"}`}>
               <td className="py-2 px-4 border-b-2 border-gray-300 bg-blue-100 text-center text-gray-700 uppercase font-semibold text-sm">
                 Id
               </td>
